@@ -2,10 +2,29 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: 'Tiempos-Heading';
+    src: url('/fonts/tiempos-heading.otf') format('opentype');
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Tiempos-Regular';
+    src: url('/fonts/tiempos-text.otf') format('opentype');
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Sohne';
+    src: url('/fonts/sohne.otf') format('opentype');
+    font-display: swap;
+  }
+}
+
 html,
 body {
   @apply bg-white dark:bg-gray-950;
-
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }
