@@ -295,7 +295,7 @@ const AnalyticsDashboard = () => {
               duration: 0.6,
               ease: "easeOut"
             }}
-            className="font-subheading text-md text-red-600 text-center my-10"
+            className="font-subheading text-md text-grey/50 text-center my-10"
           >
             We outperform competitors with 25% higher YouTube impressions and better retention. 
             Despite their higher ad spend on Instagram, we achieve greater revenue ($900 vs $850 peak) 
@@ -303,6 +303,7 @@ const AnalyticsDashboard = () => {
             and customer retention across both platforms.
           </motion.div>
         )}
+        
       </AnimatePresence>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
           {/* Performance Metrics */}
