@@ -21,4 +21,11 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  server: {
+    host: "0.0.0.0",
+    port: 5173,
+  },
+  build: {
+    sourcemap: process.env.NODE_ENV === 'development'
+  }
 });

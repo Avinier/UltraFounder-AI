@@ -18,6 +18,15 @@ export default {
         subheading: ['Tiempos-Regular', 'Georgia', 'serif'],
         text: ['Sohne', 'system-ui', 'sans-serif'],
       },
+      keyframes: {
+                glow: {
+                  '0%': { backgroundPosition: '0% 50%' },
+                  '100%': { backgroundPosition: '200% 50%' },
+                },
+              },
+              animation: {
+                glow: 'glow 0.5s linear infinite',
+              },
     },
   },
   plugins: [],

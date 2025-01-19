@@ -2,6 +2,9 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SearchInput from '~/components/UI/SearchInput';
 import AnimatedBackground from '~/components/UI/AnimatedBackground';
+import DashboardOverview from '~/components/Dashboard/DashboardOverview';
+import AnalyticsDashboard from '~/components/Dashboard/AnalyticsDashboard';
+import ProfileLogo from '~/components/UI/ProfileLogo';
 
 const Index = () => {
   const [isSearching, setIsSearching] = React.useState(false);
@@ -15,6 +18,7 @@ const Index = () => {
   return (
     <AnimatedBackground className="min-h-screen items-center justify-center">
       <AnimatePresence mode="wait">
+        <ProfileLogo/>
         {!searchCompleted && (
           <motion.div
             className="mx-auto pt-40"
@@ -66,14 +70,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             key="welcome-message"
           >
-            <motion.h1
-              className="text-6xl text-gray-800 text-center font-bold"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-            >
-              HI!
-            </motion.h1>
+            <DashboardOverview/>
           </motion.div>
         )}
       </AnimatePresence>
