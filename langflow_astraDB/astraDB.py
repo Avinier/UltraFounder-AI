@@ -5,7 +5,7 @@ TWEAKS = {
     "template": "{text}"
   },
   "GoogleGenerativeAIModel-RE7tv": {
-    "google_api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "google_api_key": "gemini_API_KEY",
     "input_value": "",
     "max_output_tokens": 500,
     "model": "gemini-1.5-pro",
@@ -17,7 +17,7 @@ TWEAKS = {
     "top_p": None
   },
   "GoogleGenerativeAIModel-FkMev": {
-    "google_api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "google_api_key": "gemini_API_KEY",
     "input_value": "",
     "max_output_tokens": 500,
     "model": "gemini-1.5-flash",
@@ -63,7 +63,7 @@ TWEAKS = {
     "input_value": "use the values that have been entered most recently"
   },
   "Google Generative AI Embeddings-Hvq4z": {
-    "api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "api_key": "gemini_API_KEY",
     "model_name": "models/text-embedding-004"
   },
   "TextInput-mNnpM": {
@@ -101,7 +101,7 @@ TWEAKS = {
     "context": ""
   },
   "GoogleGenerativeAIModel-vWATi": {
-    "google_api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "google_api_key": "gemini_API_KEY",
     "input_value": "",
     "max_output_tokens": 500,
     "model": "gemini-1.5-pro",
@@ -175,7 +175,7 @@ TWEAKS = {
     "context": ""
   },
   "GoogleGenerativeAIModel-fOzQ6": {
-    "google_api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "google_api_key": "gemini_API_KEY",
     "input_value": "",
     "max_output_tokens": 500,
     "model": "gemini-1.5-pro",
@@ -187,7 +187,7 @@ TWEAKS = {
     "top_p": None
   },
   "GoogleGenerativeAIModel-QTFy7": {
-    "google_api_key": "AIzaSyDemBttUX8orM_RKU4ACRX_asc61xrLvIQ",
+    "google_api_key": "gemini_API_KEY",
     "input_value": "",
     "max_output_tokens": 500,
     "model": "gemini-1.5-pro",
