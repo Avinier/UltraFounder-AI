@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Search, ChevronLeft, ChevronRight, Send, Loader, Check } from 'lucide-react';
 
+
 const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -20,25 +21,171 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
     "Marketing campaign analysis"
   ];
 
+  const constructPrompt = (query) => {
+    return `Analyze this query and provide market research insights: "${query}"
+
+Please provide exactly:
+- 3 pain points (labeled as PAIN:)
+- 4 strategic recommendations (labeled as STRATEGY:)
+- 3 psychological triggers (labeled as TRIGGER:)
+
+Format your response exactly like these examples:
+
+Example 1 - Coffee Shop:
+PAIN: Long wait times during morning rush hours
+PAIN: Inconsistent coffee quality between visits
+PAIN: Limited healthy food options
+
+STRATEGY: Implement mobile order-ahead system
+STRATEGY: Deploy barista training program
+STRATEGY: Expand healthy breakfast menu
+STRATEGY: Partner with local nutritionists
+
+TRIGGER: Fear of missing out on morning productivity
+TRIGGER: Desire for a personalized experience
+TRIGGER: Social status of being a regular
+
+Example 2 - Fitness Tracker:
+PAIN: Battery dies during workouts
+PAIN: Inaccurate sleep tracking
+PAIN: Syncing issues with phone
+
+STRATEGY: Develop fast-charging technology
+STRATEGY: Improve sleep algorithms
+STRATEGY: Create seamless app integration
+STRATEGY: Launch premium health insights
+
+TRIGGER: Anxiety about missing fitness goals
+TRIGGER: Need for validation of progress
+TRIGGER: Competitive drive with friends
+
+Now, generate insights for: "${query}"
+Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: labels, one item per line.`;
+  };
+
+  const transformResponse = (textResponse) => {
+    // Parse the text response into structured data
+    const pains = textResponse.match(/PAIN: .+/g)?.map(p => p.replace('PAIN: ', '')) || [];
+    const strategies = textResponse.match(/STRATEGY: .+/g)?.map(s => s.replace('STRATEGY: ', '')) || [];
+    const triggers = textResponse.match(/TRIGGER: .+/g)?.map(t => t.replace('TRIGGER: ', '')) || [];
+
+    // Create the structured items array
+    const items = [
+      {
+        id: 1,
+        type: 'painPoints',
+        height: 'h-64',
+        width: 'col-span-2',
+        data: pains.map((text, index) => ({
+          id: index + 1,
+          source: ['Reddit', 'Twitter', 'Reviews'][index % 3],
+          text,
+          frequency: Math.floor(Math.random() * (85 - 65) + 65)  // Random frequency between 65-85
+        }))
+      },
+      {
+        id: 2,
+        type: 'strategic',
+        height: 'h-[400px]',
+        width: 'col-span-1',
+        data: strategies.map((text, index) => ({
+          id: index + 1,
+          category: ['USP', 'Messaging', 'Target', 'Channel'][index],
+          text
+        }))
+      },
+      {
+        id: 3,
+        type: 'triggers',
+        height: 'min-h-72',
+        width: 'col-span-3',
+        data: triggers.map((text, index) => ({
+          id: index + 1,
+          type: ['Emotional', 'Practical', 'Social'][index],
+          text,
+          strength: (0.95 - (index * 0.1)).toFixed(2)  // Decreasing strength: 0.95, 0.85, 0.75
+        }))
+      }
+    ];
+
+    return { items };
+  };
+
+  const makeApiCall = async (query) => {
+    try {
+      const response = await fetch("https://api.fireworks.ai/inference/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": `Bearer fw_3ZgmhfzNVWDcFehkr8Kf8esg`
+        },
+        body: JSON.stringify({
+          model: "accounts/fireworks/models/deepseek-v3",
+          max_tokens: 4096,
+          top_p: 1,
+          top_k: 40,
+          presence_penalty: 0,
+          frequency_penalty: 0,
+          temperature: 0.7,
+          messages: [
+            {
+              role: "user",
+              content: constructPrompt(query)
+            }
+          ]
+        })
+      });
+
+      const data = await response.json();
+      const textResponse = data.choices[0].message.content;
+      
+      console.log('Raw LLM Response:', textResponse);
+      
+      // Transform the text response into our structured format
+      const structuredData = transformResponse(textResponse);
+      console.log('Structured Data:', structuredData);
+      
+      return structuredData;
+    } catch (error) {
+      console.error('API Error:', error);
+      throw error;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsLoading(true);
       onSearchStart?.();
       
-      progressIntervalRef.current = setInterval(() => {
-        setProgress(prev => {
-          if (prev >= 100) {
-            clearInterval(progressIntervalRef.current);
-            setTimeout(() => {
-              setIsLoading(false);
-              onSearchComplete?.(searchQuery);
-            }, 500);
-            return 100;
-          }
-          return prev + 1;
-        });
-      }, 50);
+      try {
+        progressIntervalRef.current = setInterval(() => {
+          setProgress(prev => {
+            if (prev >= 90) {
+              clearInterval(progressIntervalRef.current);
+              return 90;
+            }
+            return prev + 1;
+          });
+        }, 50);
+
+        const result = await makeApiCall(searchQuery);
+        console.log('Final structured data:', result);
+
+        setProgress(100);
+        setTimeout(() => {
+          setIsLoading(false);
+          onSearchComplete?.(result);
+        }, 500);
+      } catch (error) {
+        setIsLoading(false);
+        setProgress(0);
+      }
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+      }
     }
   };
 
@@ -164,14 +311,14 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
         </div>
       </form>
 
-      {/* Loading Progress - Now with white glowing elements */}
+      {/* Loading Progress */}
       {isLoading && (
         <div className="mt-8 space-y-6">
           <div className="backdrop-blur-xl bg-white/20 border border-white/40 rounded-xl shadow-[0_0_30px_rgba(255,255,255,0.2)]">
             <div className="p-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-medium text-grey">Analyzing Data Sources...</span>
+                  <span className="text-lg font-medium text-grey">Processing Query...</span>
                   <Loader className="w-6 h-6 animate-spin text-grey" />
                 </div>
 
@@ -189,7 +336,7 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
                     ) : (
                       <Loader className="w-4 h-4 animate-spin text-grey" />
                     )}
-                    Market Research
+                    Analyzing Query
                   </div>
                   <div className="flex items-center gap-2">
                     {progress > 66 ? (
@@ -197,7 +344,7 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
                     ) : (
                       <Loader className="w-4 h-4 animate-spin text-grey" />
                     )}
-                    Competitor Analysis
+                    Processing
                   </div>
                   <div className="flex items-center gap-2">
                     {progress > 90 ? (
@@ -205,18 +352,11 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
                     ) : (
                       <Loader className="w-4 h-4 animate-spin text-grey" />
                     )}
-                    Content Strategy
+                    Generating Response
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Loading skeletons with glow effect */}
-          <div className="space-y-4">
-            <div className="h-4 bg-white/30 rounded-full w-3/4 mx-auto animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.3)]"></div>
-            <div className="h-4 bg-white/30 rounded-full w-1/2 mx-auto animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.3)]"></div>
-            <div className="h-4 bg-white/30 rounded-full w-2/3 mx-auto animate-pulse shadow-[0_0_15px_rgba(255,255,255,0.3)]"></div>
           </div>
         </div>
       )}
@@ -247,6 +387,7 @@ const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
             {[...recommendations, ...recommendations].map((recommendation, index) => (
               <button
                 key={index}
+                onClick={() => setSearchQuery(recommendation)}
                 className="
                   whitespace-nowrap
                   px-6

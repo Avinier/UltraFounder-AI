@@ -9,8 +9,10 @@ import ProfileLogo from '~/components/UI/ProfileLogo';
 const Index = () => {
   const [isSearching, setIsSearching] = React.useState(false);
   const [searchCompleted, setSearchCompleted] = React.useState(false);
+  const [items, setItems] = React.useState([]);
 
   const handleSearchComplete = (results) => {
+    setItems(results.items);
     setSearchCompleted(true);
     setIsSearching(false);
   };
@@ -46,7 +48,6 @@ const Index = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
       <AnimatePresence mode="wait">
         <motion.div
           className={`${searchCompleted ? 'pt-10' : 'mt-12'}`}
@@ -60,7 +61,6 @@ const Index = () => {
           />
         </motion.div>
       </AnimatePresence>
-
       <AnimatePresence>
         {searchCompleted && (
           <motion.div
@@ -70,7 +70,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             key="welcome-message"
           >
-            <DashboardOverview/>
+            <DashboardOverview items={items} />
           </motion.div>
         )}
       </AnimatePresence>

@@ -130,43 +130,43 @@ const DashboardCard = ({ item }) => {
   );
 };
 
-const DashboardOverview = () => {
-  const items = [
-    {
-      id: 1,
-      type: 'painPoints',
-      height: 'h-64',
-      width: 'col-span-2',
-      data: [
-        { id: 1, source: 'Reddit', text: "Can't find fresh coffee beans in my area", frequency: 75 },
-        { id: 2, source: 'Quora', text: "Tired of inconsistent coffee quality", frequency: 82 },
-        { id: 3, source: 'Reviews', text: "Regular grocery store coffee goes stale", frequency: 68 }
-      ]
-    },
-    {
-      id: 2,
-      type: 'strategic',
-      height: 'h-[400px]',
-      width: 'col-span-1',
-      data: [
-        { id: 1, category: 'USP', text: 'Emphasize bean freshness date on packaging' },
-        { id: 2, category: 'Messaging', text: 'Focus on "expert-curated" selection process' },
-        { id: 3, category: 'Target', text: 'Target urban professionals aged 25-40' },
-        { id: 4, category: 'Channel', text: 'Leverage Instagram and LinkedIn for brand positioning' }
-      ]
-    },
-    {
-      id: 3,
-      type: 'triggers',
-      height: 'min-h-72',
-      width: 'col-span-3',
-      data: [
-        { id: 1, type: 'Emotional', text: 'Fear of missing perfect morning coffee', strength: 0.9 },
-        { id: 2, type: 'Practical', text: 'Desire for convenience', strength: 0.85 },
-        { id: 3, type: 'Social', text: 'Status of being a coffee connoisseur', strength: 0.75 }
-      ]
-    }
-  ];
+const DashboardOverview = ({ items }) => {
+  // const items = [
+  //   {
+  //     id: 1,
+  //     type: 'painPoints',
+  //     height: 'h-64',
+  //     width: 'col-span-2',
+  //     data: [
+  //       { id: 1, source: 'Reddit', text: "Can't find fresh coffee beans in my area", frequency: 75 },
+  //       { id: 2, source: 'Quora', text: "Tired of inconsistent coffee quality", frequency: 82 },
+  //       { id: 3, source: 'Reviews', text: "Regular grocery store coffee goes stale", frequency: 68 }
+  //     ]
+  //   },
+  //   {
+  //     id: 2,
+  //     type: 'strategic',
+  //     height: 'h-[400px]',
+  //     width: 'col-span-1',
+  //     data: [
+  //       { id: 1, category: 'USP', text: 'Emphasize bean freshness date on packaging' },
+  //       { id: 2, category: 'Messaging', text: 'Focus on "expert-curated" selection process' },
+  //       { id: 3, category: 'Target', text: 'Target urban professionals aged 25-40' },
+  //       { id: 4, category: 'Channel', text: 'Leverage Instagram and LinkedIn for brand positioning' }
+  //     ]
+  //   },
+  //   {
+  //     id: 3,
+  //     type: 'triggers',
+  //     height: 'min-h-72',
+  //     width: 'col-span-3',
+  //     data: [
+  //       { id: 1, type: 'Emotional', text: 'Fear of missing perfect morning coffee', strength: 0.9 },
+  //       { id: 2, type: 'Practical', text: 'Desire for convenience', strength: 0.85 },
+  //       { id: 3, type: 'Social', text: 'Status of being a coffee connoisseur', strength: 0.75 }
+  //     ]
+  //   }
+  // ];
 
   
 
