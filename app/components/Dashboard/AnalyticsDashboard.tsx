@@ -39,7 +39,7 @@ const DashboardCard = ({ title, children, delay }) => {
 const Modal = ({ onClose }) => {
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50"
       onClick={onClose}
     >
       <motion.div
@@ -47,29 +47,60 @@ const Modal = ({ onClose }) => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.9 }}
-        className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6"
+        className="bg-gradient-to-br from-white via-gray-50 to-gray-100 rounded-lg shadow-2xl max-w-lg w-full p-6 relative"
       >
-        <h2 className="text-2xl font-semibold mb-4">Instagram Post Ideas</h2>
-        <p className="mb-4">
-          📸 **Post Idea:** "The Perfect Brew"  
-          Share a story showcasing the brewing process of your premium coffee, focusing on the rich aroma and the art of pouring.
-        </p>
-        <p className="mb-4">
-          ✍️ **Caption Skeleton:**  
-          "Start your day right with our signature [Coffee Name]! ☕️  
-          Experience the perfect blend of flavor and aroma, crafted to elevate your mornings.  
-          #PremiumCoffee #BrewedToPerfection #CoffeeLovers #MorningVibes #ArtisanBlend"
-        </p>
-        <p className="mb-4">
-          🎯 **Hashtags:**  
-          #SpecialtyCoffee #CraftCoffee #CoffeeTime #CoffeeCulture #DailyBrew #CoffeeArt
-        </p>
-        <button
-          onClick={onClose}
-          className="mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-600 text-white font-semibold shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-blue-300"
-        >
-          Close
-        </button>
+        {/* Header */}
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          Instagram Post Ideas
+        </h2>
+
+        {/* Content */}
+        <div className="space-y-4">
+          <div className="p-4 bg-gradient-to-r from-blue-100 via-white to-blue-50 rounded-lg shadow-inner">
+            <p className="text-lg text-gray-700">
+              📸 <strong>Post Idea:</strong> <em>"The Perfect Brew"</em>
+            </p>
+            <p className="text-sm text-gray-600 mt-2">
+              Share a story showcasing the brewing process of your premium
+              coffee, focusing on the rich aroma and the art of pouring.
+            </p>
+          </div>
+
+          <div className="p-4 bg-gradient-to-r from-green-100 via-white to-green-50 rounded-lg shadow-inner">
+            <p className="text-lg text-gray-700">
+              ✍️ <strong>Caption Skeleton:</strong>
+            </p>
+            <p className="text-sm text-gray-600 mt-2">
+              "Start your day right with our signature [Coffee Name]! ☕️
+              Experience the perfect blend of flavor and aroma, crafted to
+              elevate your mornings.
+              <span className="text-blue-500 font-medium">
+                {" "}
+                #PremiumCoffee #BrewedToPerfection #CoffeeLovers
+              </span>
+            </p>
+          </div>
+
+          <div className="p-4 bg-gradient-to-r from-purple-100 via-white to-purple-50 rounded-lg shadow-inner">
+            <p className="text-lg text-gray-700">
+              🎯 <strong>Hashtags:</strong>
+            </p>
+            <p className="text-sm text-gray-600 mt-2">
+              #SpecialtyCoffee #CraftCoffee #CoffeeTime #CoffeeCulture #DailyBrew
+              #CoffeeArt
+            </p>
+          </div>
+        </div>
+
+        {/* Footer Button */}
+        <div className="mt-6 text-center">
+          <button
+            onClick={onClose}
+            className="px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-500 to-blue-600 text-white font-bold shadow-md hover:scale-105 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-transform duration-300"
+          >
+            Close
+          </button>
+        </div>
       </motion.div>
     </div>
   );
