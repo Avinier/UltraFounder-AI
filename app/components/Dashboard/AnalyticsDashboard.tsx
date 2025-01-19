@@ -35,6 +35,47 @@ const DashboardCard = ({ title, children, delay }) => {
     </GlassContainer>
   );
 };
+
+const Modal = ({ onClose }) => {
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <motion.div
+        onClick={(e) => e.stopPropagation()} // Prevent modal close on content click
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.9 }}
+        className="bg-white rounded-lg shadow-xl max-w-lg w-full p-6"
+      >
+        <h2 className="text-2xl font-semibold mb-4">Instagram Post Ideas</h2>
+        <p className="mb-4">
+          📸 **Post Idea:** "The Perfect Brew"  
+          Share a story showcasing the brewing process of your premium coffee, focusing on the rich aroma and the art of pouring.
+        </p>
+        <p className="mb-4">
+          ✍️ **Caption Skeleton:**  
+          "Start your day right with our signature [Coffee Name]! ☕️  
+          Experience the perfect blend of flavor and aroma, crafted to elevate your mornings.  
+          #PremiumCoffee #BrewedToPerfection #CoffeeLovers #MorningVibes #ArtisanBlend"
+        </p>
+        <p className="mb-4">
+          🎯 **Hashtags:**  
+          #SpecialtyCoffee #CraftCoffee #CoffeeTime #CoffeeCulture #DailyBrew #CoffeeArt
+        </p>
+        <button
+          onClick={onClose}
+          className="mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-sky-600 text-white font-semibold shadow-lg hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-blue-300"
+        >
+          Close
+        </button>
+      </motion.div>
+    </div>
+  );
+};
+
+
 const GenerateButton = ({ onClick, isActive }) => {
   return (
     <button
@@ -65,7 +106,7 @@ const GenerateButton = ({ onClick, isActive }) => {
       `}
     >
       <span className="relative z-10">
-        Generate Report
+        Generate Posts
       </span>
       {/* Constant subtle glow */}
       <div
@@ -180,7 +221,7 @@ const CompetitorButton = ({ onClick, isActive }) => {
 const AnalyticsDashboard = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [showCompetitor, setShowCompetitor] = useState(false);
-  const [setShowGeneration, showGeneration] = useState(false);
+  const [showGeneration, setShowGeneration] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -204,7 +245,7 @@ const AnalyticsDashboard = () => {
           <div className={`transition-all duration-500 delay-100
             ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
             <GenerateButton
-              onClick={() => setShowGeneration(!showGeneration)}
+              onClick={() => setShowGeneration(true)}
               isActive={showGeneration}
             />
           </div>
@@ -265,6 +306,7 @@ const AnalyticsDashboard = () => {
           </div>
         </div>
       </div>
+      {showGeneration && <Modal onClose={() => setShowGeneration(false)} />}
     </Background>
   );
 };
