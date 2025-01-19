@@ -39,7 +39,7 @@ const DashboardCard = ({ title, children, delay }) => {
 const Modal = ({ onClose }) => {
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black font-subheading bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50"
       onClick={onClose}
     >
       <motion.div
@@ -116,7 +116,6 @@ const GenerateButton = ({ onClick, isActive }) => {
         px-6 
         py-3 
         rounded-lg
-        font-semibold
         text-white
         bg-gradient-to-r 
         from-blue-600 
@@ -124,6 +123,7 @@ const GenerateButton = ({ onClick, isActive }) => {
         to-sky-500
         transition-all 
         duration-300
+        font-subheading
         transform
         hover:scale-102
         hover:brightness-110
@@ -187,7 +187,7 @@ const CompetitorButton = ({ onClick, isActive }) => {
         px-6 
         py-3 
         rounded-lg
-        font-semibold
+        font-subheading
         text-white
         bg-gradient-to-r 
         from-red-600 
