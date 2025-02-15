@@ -77,40 +77,54 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
     // Create the structured items array
     const items = [
       {
+        id: 5,
+        type: 'deepResearch',
+        height: 'h-64',
+        width: 'col-span-2',
+        data: []
+      },
+      {
+        id: 6,
+        type: 'chat',
+        height: 'h-64',
+        width: 'col-span-1',
+        data: []
+      },
+      {
         id: 1,
-        type: 'painPoints',
+        type: 'topResearchFinds',
         height: 'h-64',
         width: 'col-span-2',
         data: pains.map((text: string, index: number) => ({
           id: index + 1,
-          source: ['Reddit', 'Twitter', 'Reviews'][index % 3],
+          source: ['User Interviews', 'Industry Reports', 'Founder Surveys'][index % 3],
           text,
           frequency: Math.floor(Math.random() * (85 - 65) + 65)  // Random frequency between 65-85
         }))
       },
       {
-        id: 2,
-        type: 'strategic',
-        height: 'h-[400px]',
-        width: 'col-span-1',
-        data: strategies.map((text: string, index: number) => ({
-          id: index + 1,
-          category: ['USP', 'Messaging', 'Target', 'Channel'][index],
-          text
-        }))
-      },
-      {
         id: 3,
-        type: 'triggers',
+        type: 'challengesFaced',
         height: 'min-h-72',
-        width: 'col-span-3',
+        width: 'col-span-1',
         data: triggers.map((text: string, index: number) => ({
           id: index + 1,
-          type: ['Emotional', 'Practical', 'Social'][index],
+          type: ['Financial', 'Operational', 'Personal'][index % 3],
           text,
           strength: (0.95 - (index * 0.1)).toFixed(2)  // Decreasing strength: 0.95, 0.85, 0.75
         }))
-      }
+      },
+      {
+        id: 2,
+        type: 'productDevelopmentInsights',
+        height: 'h-[400px]',
+        width: 'col-span-3',
+        data: strategies.map((text: string, index: number) => ({
+          id: index + 1,
+          category: ['Market Analysis', 'User Feedback', 'Competitive Analysis', 'Technology Trends'][index % 4],
+          text
+        }))
+      },
     ];
 
     return { items };
@@ -189,7 +203,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
       }
 
       if (progressIntervalRef.current !== null) {
-        clearInterval(progressIntervalRef.current!);
+        clearInterval(progressIntervalRef.current);
       }
     }
   };
@@ -230,7 +244,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
 
     return () => {
       if (scrollIntervalRef.current !== null) {
-        clearInterval(scrollIntervalRef.current!);
+        clearInterval(scrollIntervalRef.current);
       }
     };
   }, [isPaused, isLoading]);

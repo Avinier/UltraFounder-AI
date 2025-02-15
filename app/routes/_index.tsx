@@ -70,7 +70,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             key="welcome-message"
           >
-            <DashboardOverview />
+            <DashboardOverview  items={items}/>
           </motion.div>
         )}
       </AnimatePresence>

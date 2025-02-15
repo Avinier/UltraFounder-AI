@@ -36,7 +36,7 @@ interface StrategicComponentProps {
   data: StrategicInsight[];
 }
 
-interface DashboardCardItem {
+export interface DashboardCardItem {
   id: number;
   type: string;
   height: string;
@@ -212,59 +212,7 @@ const DashboardCard = ({ item }: { item: DashboardCardItem }) => {
   );
 };
 
-const DashboardOverview = () => {
-  const items: DashboardCardItem[] = [
-    {
-        id: 5,
-        type: 'deepResearch',
-        height: 'h-64',
-        width: 'col-span-2',
-        data: []
-    },
-    {
-        id: 6,
-        type: 'chat',
-        height: 'h-64',
-        width: 'col-span-1',
-        data: []
-    },
-    {
-      id: 3,
-      type: 'challengesFaced',
-      height: 'min-h-72',
-      width: 'col-span-1',
-      data: [
-        { id: 1, type: 'Financial', text: 'Limited access to funding and resources', strength: 0.9 },
-        { id: 2, type: 'Operational', text: 'Managing all aspects of the business independently', strength: 0.85 },
-        { id: 3, type: 'Personal', text: 'Maintaining work-life balance and avoiding burnout', strength: 0.8 }
-      ]
-    },
-    {
-      id: 1,
-      type: 'topResearchFinds',
-      height: 'h-64',
-      width: 'col-span-2',
-      data: [
-        { id: 1, source: 'User Interviews', text: "Solo founders struggle with prioritizing tasks and managing their time effectively.", frequency: 85 },
-        { id: 2, source: 'Industry Reports', text: "Many solo founders feel isolated and lack a strong support network.", frequency: 78 },
-        { id: 3, source: 'Founder Surveys', text: "Solo founders often face difficulties in acquiring funding and attracting investors.", frequency: 72 }
-      ]
-    },
-    {
-      id: 2,
-      type: 'productDevelopmentInsights',
-      height: 'h-[400px]',
-      width: 'col-span-3',
-      data: [
-        { id: 1, category: 'Market Analysis', text: 'Identify niche markets with unmet needs to focus product development efforts.' },
-        { id: 2, category: 'User Feedback', text: 'Gather continuous user feedback to iterate and improve product features.' },
-        { id: 3, category: 'Competitive Analysis', text: 'Analyze competitor products to identify opportunities for differentiation and innovation.' },
-        { id: 4, category: 'Technology Trends', text: 'Stay updated with the latest technology trends to leverage them in product development.' }
-      ]
-    },
-
-  ];
-
+const DashboardOverview = ({ items }: DashboardOverviewProps) => {
   return (
     <div className="
       w-[90vw]

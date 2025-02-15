@@ -265,7 +265,7 @@ const AnalyticsDashboard = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
           <h1 className={`text-3xl font-subheading text-gray-900 mb-4 md:mb-0 transition-all duration-500
             ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
-            ARTGuru Analytics
+            UltraFounder Analytics
           </h1>
           {}
           <div className={`transition-all duration-500 delay-100
