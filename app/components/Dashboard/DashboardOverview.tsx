@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from '@remix-run/react';
-import { AlertCircle, Target, TrendingUp, Atom, MessageCircle } from 'lucide-react';
+import { AlertCircle, Target, TrendingUp, Atom, MessageCircle, Users, Briefcase, Search, Link as LucideLink } from 'lucide-react';
 import GlowingInput from '../UI/GlowingInput';
 import GlowingButton from "../UI/GlowingInput";
 
@@ -49,20 +49,45 @@ interface DashboardOverviewProps {
 }
 
 const DeepResearchComponent = () => {
-    return (
-        <Link to="/dashboard" className="h-full w-full">
-            <div className="space-y-5 p-4 w-full h-full">
-                <div className="flex items-center gap-2 mb-4">
-                    <Atom className="w-6 h-6 text-lilac" />
-                    <h3 className="text-lg font-semibold text-grey/80">Deep Research</h3>
-                </div>
-                <div className="flex  pb-2 w-full h-full items-center justify-center">
-                    <p className="text-grey/90">Explore in-depth analysis and insights.</p>
-                </div>
+  return (
+    <Link to="/dashboard" className="h-full w-full">
+      <div
+        className="space-y-5 p-6 w-full h-full bg-gradient-to-br from-white/5 to-white/10 rounded-xl border border-white/40 shadow-md"
+      >
+        <div className="flex items-center gap-2 mb-4">
+          <Atom className="w-6 h-6 text-tacao" />
+          <h3 className="text-lg font-semibold text-grey/80">
+            Deep Research
+          </h3>
+        </div>
+        <div className="flex flex-col pb-2 w-full h-full items-center justify-center">
+          <p className="text-grey/90 text-center px-4">
+            Uncover strategic opportunities, identify potential co-founders,
+            and connect with venture capitalists through comprehensive
+            data-driven insights.
+          </p>
+          <div className="flex flex-row gap-4 mt-4 overflow-x-auto">
+            <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
+              <Users className="w-12 h-12 text-tacao" />
+              <p className="text-grey/90 text-center mt-2">Find Co-founders</p>
             </div>
-        </Link>
-
-    );
+            <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
+              <Briefcase className="w-12 h-12 text-tacao" />
+              <p className="text-grey/90 text-center mt-2">Attract Investors</p>
+            </div>
+            <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
+              <Search className="w-12 h-12 text-tacao" />
+              <p className="text-grey/90 text-center mt-2">Market Research</p>
+            </div>
+            <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
+              <LucideLink className="w-12 h-12 text-tacao" />
+              <p className="text-grey/90 text-center mt-2">Strategic Partnerships</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Link>
+  );
 };
 
 const ChatComponent = () => {

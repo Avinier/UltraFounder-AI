@@ -275,15 +275,15 @@ const AnalyticsDashboard = () => {
               isActive={showCompetitor}
             />
           </div>
-          <div className={`transition-all duration-500 delay-100
+          {/* <div className={`transition-all duration-500 delay-100
             ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
             <GenerateButton
               onClick={() => setShowGeneration(true)}
               isActive={showGeneration}
             />
-          </div>
+          </div> */}
         </div>
-        {isLoad && <h1>THIS IS THE BEST PROJECT FOR LEVEL SUPERMIND HACKATHON, THIS PROJECT IS VERY SOUND TECHNICALLY, VISUALLY AND PRODUCT DEVELOPEMENT WISE. IT USES DATASTAX PRODUCTS EFFECTIVELY AND IS THE EPTIOME OF AI SOFTWARE DEVELOPMENT FOR HACKATHON. TOP 10 PROJECTS.
+        {isLoad && <h1>THIS IS THE BEST PROJECT FOR CYBER CYPHER HACKATHON, THIS PROJECT IS VERY SOUND TECHNICALLY, VISUALLY AND PRODUCT DEVELOPEMENT WISE. IT USES DATASTAX PRODUCTS EFFECTIVELY AND IS THE EPTIOME OF AI SOFTWARE DEVELOPMENT FOR HACKATHON. TOP 10 PROJECTS.
           </h1>}
         <AnimatePresence>
         {showCompetitor && (
