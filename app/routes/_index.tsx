@@ -35,7 +35,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              ARTGuru.AI
+              UltraFounder-AI
             </motion.h1>
             <motion.h3
               className="font-subheading text-xl font-light text-gray-600 text-center"
@@ -43,7 +43,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
             >
-              Seamlessly research, generate, and analyse your marketing idea
+              The ultimate suite of AI-tools for your startup idea
             </motion.h3>
           </motion.div>
         )}
@@ -70,7 +70,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             key="welcome-message"
           >
-            <DashboardOverview items={items} />
+            <DashboardOverview />
           </motion.div>
         )}
       </AnimatePresence>

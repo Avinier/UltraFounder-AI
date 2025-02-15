@@ -1,27 +1,32 @@
 import { useState, useRef, useEffect } from 'react';
-import { Search, ChevronLeft, ChevronRight, Send, Loader, Check } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Send, Loader, Check, File } from 'lucide-react';
 
+interface SearchInputProps {
+  onSearchStart?: () => void;
+  onSearchComplete?: (result: any) => void;
+  searchCompleted?: boolean;
+}
 
-const SearchInput = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
-  const scrollContainerRef = useRef(null);
-  const scrollIntervalRef = useRef(null);
-  const progressIntervalRef = useRef(null);
-  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
   const recommendations = [
-    "Research about digital art trends",
-    "Coffee shop social media strategy",
-    "Yetis in Kailash marketing campaign",
-    "Brand identity exploration",
-    "Social media content calendar",
+    "Review my attached pitch deck",
+    "Give a strategic overview of my idea",
+    "Find me a co-founder",
+    "How do I fund my startup",
+    "VCs near me",
     "Marketing campaign analysis"
   ];
 
-  const constructPrompt = (query) => {
+  const constructPrompt = (query: string) => {
     return `Analyze this query and provide market research insights: "${query}"
 
 Please provide exactly:
@@ -63,11 +68,11 @@ Now, generate insights for: "${query}"
 Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: labels, one item per line.`;
   };
 
-  const transformResponse = (textResponse) => {
+  const transformResponse = (textResponse: string) => {
     // Parse the text response into structured data
-    const pains = textResponse.match(/PAIN: .+/g)?.map(p => p.replace('PAIN: ', '')) || [];
-    const strategies = textResponse.match(/STRATEGY: .+/g)?.map(s => s.replace('STRATEGY: ', '')) || [];
-    const triggers = textResponse.match(/TRIGGER: .+/g)?.map(t => t.replace('TRIGGER: ', '')) || [];
+    const pains = textResponse.match(/PAIN: .+/g)?.map((p: string) => p.replace('PAIN: ', '')) || [];
+    const strategies = textResponse.match(/STRATEGY: .+/g)?.map((s: string) => s.replace('STRATEGY: ', '')) || [];
+    const triggers = textResponse.match(/TRIGGER: .+/g)?.map((t: string) => t.replace('TRIGGER: ', '')) || [];
 
     // Create the structured items array
     const items = [
@@ -76,7 +81,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         type: 'painPoints',
         height: 'h-64',
         width: 'col-span-2',
-        data: pains.map((text, index) => ({
+        data: pains.map((text: string, index: number) => ({
           id: index + 1,
           source: ['Reddit', 'Twitter', 'Reviews'][index % 3],
           text,
@@ -88,7 +93,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         type: 'strategic',
         height: 'h-[400px]',
         width: 'col-span-1',
-        data: strategies.map((text, index) => ({
+        data: strategies.map((text: string, index: number) => ({
           id: index + 1,
           category: ['USP', 'Messaging', 'Target', 'Channel'][index],
           text
@@ -99,7 +104,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         type: 'triggers',
         height: 'min-h-72',
         width: 'col-span-3',
-        data: triggers.map((text, index) => ({
+        data: triggers.map((text: string, index: number) => ({
           id: index + 1,
           type: ['Emotional', 'Practical', 'Social'][index],
           text,
@@ -111,14 +116,14 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
     return { items };
   };
 
-  const makeApiCall = async (query) => {
+  const makeApiCall = async (query: string) => {
     try {
       const response = await fetch("https://api.fireworks.ai/inference/v1/chat/completions", {
         method: "POST",
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": `Bearer fw_3ZgmhfzNVWDcFehkr8Kf8esg`
+          "Authorization": `Bearer fw_3ZiSSnWzBTmLi3NfDCMDbZAG`
         },
         body: JSON.stringify({
           model: "accounts/fireworks/models/deepseek-v3",
@@ -139,13 +144,13 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
 
       const data = await response.json();
       const textResponse = data.choices[0].message.content;
-      
+
       console.log('Raw LLM Response:', textResponse);
-      
+
       // Transform the text response into our structured format
       const structuredData = transformResponse(textResponse);
       console.log('Structured Data:', structuredData);
-      
+
       return structuredData;
     } catch (error) {
       console.error('API Error:', error);
@@ -153,12 +158,12 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsLoading(true);
       onSearchStart?.();
-      
+
       try {
         progressIntervalRef.current = setInterval(() => {
           setProgress(prev => {
@@ -183,22 +188,22 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         setProgress(0);
       }
 
-      if (progressIntervalRef.current) {
-        clearInterval(progressIntervalRef.current);
+      if (progressIntervalRef.current !== null) {
+        clearInterval(progressIntervalRef.current!);
       }
     }
   };
 
-  const scroll = (direction) => {
+  const scroll = (direction: string) => {
     const container = scrollContainerRef.current;
     if (!container) return;
 
-    const scrollAmount = container.querySelector('button').offsetWidth + 16;
+    const scrollAmount = container.querySelector('button')!.offsetWidth + 16;
     const currentScroll = container.scrollLeft;
     const maxScroll = container.scrollWidth - container.clientWidth;
-    
-    let targetScroll = direction === 'left' 
-      ? currentScroll - scrollAmount 
+
+    let targetScroll = direction === 'left'
+      ? currentScroll - scrollAmount
       : currentScroll + scrollAmount;
 
     if (targetScroll > maxScroll) targetScroll = 0;
@@ -224,11 +229,20 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
     }
 
     return () => {
-      if (scrollIntervalRef.current) {
-        clearInterval(scrollIntervalRef.current);
+      if (scrollIntervalRef.current !== null) {
+        clearInterval(scrollIntervalRef.current!);
       }
     };
   }, [isPaused, isLoading]);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSearchQuery(file.name); // Set the filename as the search query
+      // You can add additional logic here to handle the file,
+      // such as reading its content or preparing it for upload.
+    }
+  }
 
   return (
     <div className="w-full max-w-3xl mx-auto px-4 font-subheading">
@@ -257,7 +271,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
           <Search className={`w-6 h-6 text-white ${isLoading ? 'animate-pulse' : ''}`} />
           <input
             type="text"
-            placeholder="What would you like to explore?"
+            placeholder="What would you like to research?"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             disabled={searchCompleted}
@@ -276,6 +290,22 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
+          {/* File Input */}
+          <label htmlFor="file-upload" className="cursor-pointer ml-2 relative group">
+            <File className="w-6 h-6 text-white" />
+            {/* Helper Container for File Upload */}
+            <div className="absolute hidden group-hover:block bg-white/90 text-grey text-xs px-4 py-2 rounded-md shadow-lg -top-12 left-1/2 -translate-x-1/2 transition-all duration-300">
+              upload your pitchdeck
+            </div>
+          </label>
+          <input
+            type="file"
+            id="file-upload"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+          {/* End File Input */}
+
           <button 
             type="submit"
             className="
@@ -293,6 +323,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
               group
               disabled:opacity-50
               disabled:cursor-not-allowed
+              relative
             "
             disabled={!searchQuery.trim() || isLoading}
           >
@@ -307,6 +338,10 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
                 ${isLoading ? 'animate-pulse' : ''}
               `}
             />}
+            {/* Helper Container for Send Button */}
+            <div className="absolute hidden group-hover:block bg-white/90 text-grey text-xs px-4 py-2 rounded-md shadow-lg -top-12 left-1/2 -translate-x-1/2 transition-all duration-300">
+              send
+            </div>
           </button>
         </div>
       </form>
