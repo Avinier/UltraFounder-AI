@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ART Finder: AI-Powered Ad Research Automation Tool 🚀
 
 ## Overview
@@ -114,3 +115,7 @@ Developed with ❤️ for [Hackathon Name/Year]
 **Team Lead**: [Your Name]
 **Email**: [contact@artfinder.com]
 **Project Repository**: [GitHub Link]
+=======
+# UltraFounder-AI
+The ultimate suite of AI tool for all your early-stage startup problems.
+>>>>>>> 59906254881fe8de9df9401ccbb46b6f3da1a27d
