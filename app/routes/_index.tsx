@@ -35,7 +35,7 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
             >
-              UltraFounder-AI
+              UltraFounder.AI
             </motion.h1>
             <motion.h3
               className="font-subheading text-xl font-light text-gray-600 text-center"
