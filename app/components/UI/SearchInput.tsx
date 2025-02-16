@@ -137,7 +137,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
-          "Authorization": `Bearer fw_3ZiSSnWzBTmLi3NfDCMDbZAG`
+          "Authorization": `Bearer ${process.env.FIREWORKS_API_KEY}`
         },
         body: JSON.stringify({
           model: "accounts/fireworks/models/deepseek-v3",
