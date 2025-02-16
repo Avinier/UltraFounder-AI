@@ -67,10 +67,12 @@ const DeepResearchComponent = () => {
             data-driven insights.
           </p>
           <div className="flex flex-row gap-4 mt-4 overflow-x-auto">
-            <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
-              <Users className="w-12 h-12 text-tacao" />
-              <p className="text-grey/90 text-center mt-2">Find Co-founders</p>
-            </div>
+            <Link to="/cofounder" className="no-underline">
+              <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px] hover:bg-white/20 transition-all duration-300">
+                <Users className="w-12 h-12 text-tacao" />
+                <p className="text-grey/90 text-center mt-2">Find Co-founders</p>
+              </div>
+            </Link>
             <div className="p-4 bg-white/10 rounded-xl border border-white/20 flex flex-col items-center justify-center min-w-[200px]">
               <Briefcase className="w-12 h-12 text-tacao" />
               <p className="text-grey/90 text-center mt-2">Attract Investors</p>
