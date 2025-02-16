@@ -30,7 +30,7 @@ const Chat = () => {
 
 
   const constructPrompt = (query: string) => {
-    return `You are a helpful AI assistant. Respond to the user's query: "${query}"`;
+    return `You are a helpful AI assistant. Respond to the user's query in under 50 words: "${query}"`;
   };
 
   const makeApiCall = async (query: string) => {
