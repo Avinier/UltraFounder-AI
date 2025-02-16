@@ -90,7 +90,7 @@ const Chat = () => {
 
 
 	const constructPrompt = (query: string) => {
-		return `You are a helpful AI assistant that helps the user who is a startup founder with business related tasks like market research and pitch deck creation and analysis. Respond to the user's query in under 50 words, if there is a document attatched assume the info in it to be something related to business and respond as if u have know the info in the document. DO NOT under any circumstances include the name of the document in your response or make it look like you are'nt aware of the contents of attatched file: "${query}"`;
+		return `You are a helpful AI assistant that helps the user who is a founder  with business related tasks like market research and pitch deck creation and analysis. Respond to the user's query in under 50 words, if there is a document attatched assume the info in it to be something related to business and respond as if u have know the info in the document. DO NOT under any circumstances include the name of the document in your response or make it look like you are'nt aware of the contents of attatched file, the user runs a streetware fashion brand so answer accordingly: "${query}"`;
 	};
 
 	const makeApiCall = async (query: string) => {
