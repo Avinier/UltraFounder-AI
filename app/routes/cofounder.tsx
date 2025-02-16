@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
+import { Link } from '@remix-run/react';
 import Background from '~/components/UI/Background';
 import GlassContainer from '~/components/UI/GlassContainer';
 import GlowingInput from '~/components/UI/GlowingInput';
-import { Search, Code, Briefcase, Users, Target } from 'lucide-react';
+import { Search, Code, Briefcase, Users, Target, ChevronLeft } from 'lucide-react';
 
 const CofounderSearch = () => {
   const [activeTab, setActiveTab] = useState('create');
-  
-    // Calculate profile completion
+
+  // Calculate profile completion
   const calculateCompletion = (profile) => {
     const requiredFields = ['roleType', 'experienceLevel', 'vision'];
     const completedFields = requiredFields.filter(field => Boolean(profile[field]));
@@ -59,6 +60,9 @@ const CofounderSearch = () => {
         <GlassContainer className="mb-8 p-6">
           <div className="flex justify-between items-center">
             <h1 className="text-3xl font-bold text-black font-subheading">Co-founder Search</h1>
+            <Link to="/" className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-grey/50 text-sm transition-all duration-300 hover:bg-white/20 hover:border-white/30">
+              <ChevronLeft className="w-4 h-4 mr-2" /> Back
+            </Link>
           </div>
         </GlassContainer>
 
@@ -68,7 +72,7 @@ const CofounderSearch = () => {
             {/* Left Column - Profile Form */}
             <GlassContainer className="p-6 space-y-6">
               <h2 className="text-2xl font-semibold text-black mb-6 font-subheading">Create Your Co-founder Requirements</h2>
-              
+
               {/* Role Type */}
               <div className="space-y-2">
                 <label className="text-gray-700 block font-medium font-subheading">Role Type</label>
@@ -99,7 +103,7 @@ const CofounderSearch = () => {
                       key={skill}
                       onClick={() => {
                         const newSkills = profile.skills.includes(skill)
-                          ? profile.skills.filter(s => s !== skill)
+                          ? profile.skills.filter((s) => s !== skill)
                           : [...profile.skills, skill];
                         setProfile({ ...profile, skills: newSkills });
                       }}
@@ -179,15 +183,13 @@ const CofounderSearch = () => {
                 <div className="space-y-4">
                   <div className="flex justify-between items-center text-gray-700">
                     <span className="font-subheading">Profile Completion</span>
-                    <span className="text-black font-medium font-subheading">
-                      {calculateCompletion(profile)}%
-                    </span>
+                    <span className="text-black font-medium font-subheading">{calculateCompletion(profile)}%</span>
                   </div>
                   <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-purple-500/80 to-pink-500/80 transition-all duration-300"
                       style={{
-                        width: `${calculateCompletion(profile)}%`
+                        width: `${calculateCompletion(profile)}%`,
                       }}
                     />
                   </div>
@@ -195,13 +197,11 @@ const CofounderSearch = () => {
                     <button
                       onClick={handleSearch}
                       disabled={calculateCompletion(profile) < 100 || isLoading}
-                      className={`px-6 py-3 rounded-lg transition-all duration-300 font-subheading
-                        ${calculateCompletion(profile) === 100 
-                          ? 'bg-purple-500/80 text-white hover:bg-purple-600/80' 
+                      className={`px-6 py-3 rounded-lg transition-all duration-300 font-subheading ${
+                        calculateCompletion(profile) === 100
+                          ? 'bg-purple-500/80 text-white hover:bg-purple-600/80'
                           : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        }
-                        ${isLoading ? 'cursor-wait opacity-75' : ''}
-                      `}
+                      } ${isLoading ? 'cursor-wait opacity-75' : ''}`}
                     >
                       {isLoading ? 'Searching...' : 'Search Profiles'}
                     </button>
@@ -213,7 +213,7 @@ const CofounderSearch = () => {
                       <h4 className="text-lg font-medium text-black font-subheading">Found Matches</h4>
                       <div className="space-y-3">
                         {matches.map((match) => (
-                          <div 
+                          <div
                             key={match.id}
                             className="p-4 bg-white/10 rounded-lg border border-white/20 hover:border-purple-500/30 transition-all duration-300"
                           >
@@ -228,7 +228,7 @@ const CofounderSearch = () => {
                             </div>
                             <div className="mt-2 flex flex-wrap gap-2">
                               {match.skills.map((skill, index) => (
-                                <span 
+                                <span
                                   key={index}
                                   className="px-2 py-1 bg-purple-500/10 text-purple-600 rounded-full text-xs font-subheading"
                                 >
@@ -253,7 +253,7 @@ const CofounderSearch = () => {
                 <GlowingInput placeholder="Search for co-founders..." />
               </div>
             </GlassContainer>
-            
+
             {/* Search Filters */}
             <GlassContainer className="p-6">
               <div className="flex flex-wrap gap-4">
@@ -273,5 +273,6 @@ const CofounderSearch = () => {
     </Background>
   );
 };
+
 
 export default CofounderSearch;

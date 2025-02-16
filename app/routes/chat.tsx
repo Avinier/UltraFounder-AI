@@ -1,7 +1,7 @@
 import * as pdfjsLib from 'pdfjs-dist';
-
+import { Link } from '@remix-run/react';
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, Loader, User, Atom, File } from 'lucide-react';
+import { Send, Loader, User, Atom, File, ChevronLeft } from 'lucide-react';
 import AnimatedBackground from '~/components/UI/AnimatedBackground';
 import GlassContainer from '~/components/UI/GlassContainer';
 import { motion } from 'framer-motion';
@@ -157,6 +157,9 @@ const Chat = () => {
 		<AnimatedBackground className="min-h-screen flex items-center justify-center">
 			<GlassContainer className="w-[90vw] h-[90vh] overflow-auto">
 				<div className="p-6">
+        			<Link to="/" className="absolute top-4 left-4 inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-lg border border-white/20 text-grey/50 text-sm transition-all duration-300 hover:bg-white/20 hover:border-white/30">
+            			<ChevronLeft className="w-4 h-4 mr-2" /> Back
+          			</Link>
 					<h1 className="text-4xl font-semibold mb-2 text-center font-subheading text-grey">
 						UltraFounder.AI Chat
 					</h1>

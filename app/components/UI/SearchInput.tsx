@@ -5,9 +5,11 @@ interface SearchInputProps {
   onSearchStart?: () => void;
   onSearchComplete?: (result: any) => void;
   searchCompleted?: boolean;
+  setIsSearching?: React.Dispatch<React.SetStateAction<boolean>>;
+  setItems?: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({ onSearchStart, onSearchComplete, searchCompleted }) => {
+const SearchInput: React.FC<SearchInputProps> = ({ onSearchStart, onSearchComplete, searchCompleted, setIsSearching, setItems }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -176,7 +178,7 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsLoading(true);
-      onSearchStart?.();
+      setIsSearching?.(true);
 
       try {
         progressIntervalRef.current = setInterval(() => {
@@ -195,15 +197,18 @@ Important: Use exactly the same format with PAIN:, STRATEGY:, and TRIGGER: label
         setProgress(100);
         setTimeout(() => {
           setIsLoading(false);
-          onSearchComplete?.(result);
+          setIsSearching?.(false);
+          setItems?.(result.items);
+          onSearchComplete?.(result); // Keep this to update searchCompleted
         }, 500);
       } catch (error) {
         setIsLoading(false);
         setProgress(0);
+        setIsSearching?.(false);
       }
 
       if (progressIntervalRef.current !== null) {
-        clearInterval(progressIntervalRef.current);
+        clearInterval(progressIntervalRef.current as NodeJS.Timeout);
       }
     }
   };

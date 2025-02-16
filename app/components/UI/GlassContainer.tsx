@@ -1,6 +1,18 @@
 import React, { useState } from 'react';
 
-const GlassContainer = ({ children, className = '', isInteractive = true }) => {
+interface GlassContainerProps {
+  children: React.ReactNode;
+  className?: string;
+  isInteractive?: boolean;
+  style?: React.CSSProperties;
+}
+
+const GlassContainer = ({
+  children,
+  className = '',
+  isInteractive = true,
+  style,
+}: GlassContainerProps) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const glassStyles = `
@@ -29,6 +41,7 @@ const GlassContainer = ({ children, className = '', isInteractive = true }) => {
   return (
     <div
       className={glassStyles}
+      style={style}
       onMouseEnter={() => isInteractive && setIsFocused(true)}
       onMouseLeave={() => isInteractive && setIsFocused(false)}
     >
